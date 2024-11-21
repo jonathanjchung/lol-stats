@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/jonathanjchung/lol-stats/server/config"
 )
 
 func GetMatchHistory(puuid string, apiKey string) []string {
-	url := fmt.Sprintf("https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/%s/ids?start=0&count=20&api_key=%s", puuid, apiKey)
+	url := fmt.Sprintf(config.MatchHistoryEndpoint, puuid, apiKey)
 
 	if puuid == "" {
 		log.Println("No puuid")
@@ -30,7 +32,7 @@ func GetMatchHistory(puuid string, apiKey string) []string {
 }
 
 func GetMatchDataFromId(matchId string, apiKey string) MatchDto {
-	url := fmt.Sprintf("https://americas.api.riotgames.com/lol/match/v5/matches/%s?api_key=%s", matchId, apiKey)
+	url := fmt.Sprintf(config.MatchDataEndpoint, matchId, apiKey)
 
 	if matchId == "" {
 		log.Println("No matchId")

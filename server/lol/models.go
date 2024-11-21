@@ -1,6 +1,6 @@
 package lol
 
-type Account struct {
+type AccountDto struct {
 	Puuid    string `json:"puuid"`
 	GameName string `json:"gameName"`
 	TagLine  string `json:"tagLine"`

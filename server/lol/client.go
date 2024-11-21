@@ -31,7 +31,7 @@ func (rc *RiotClient) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (rc *RiotClient) HandleGetRequests(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/summoners":
-		rc.TestGettingAccountInfo(w, r)
+		rc.GetSummonerMatchHistory(w, r)
 		return
 	default:
 		log.Println("default")
