@@ -18,6 +18,7 @@ func NewRiotClient(apiKey string) (*RiotClient, error) {
 }
 
 func (rc *RiotClient) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	EnableCors(&w)
 	switch r.Method {
 	case http.MethodGet:
 		rc.HandleGetRequests(w, r)
@@ -37,4 +38,10 @@ func (rc *RiotClient) HandleGetRequests(w http.ResponseWriter, r *http.Request) 
 		log.Println("default")
 		return
 	}
+}
+
+func EnableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*") // this star might be bad but not sure why yet
+	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
 }

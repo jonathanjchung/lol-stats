@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jonathanjchung/lol-stats/server/config"
-	"github.com/jonathanjchung/lol-stats/server/lol"
+	lol "github.com/jonathanjchung/lol-stats/server/riotclient"
 )
 
 func main() {

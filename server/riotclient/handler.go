@@ -4,29 +4,33 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/jonathanjchung/lol-stats/server/lol"
 )
 
 type PlayerInfo struct {
-	Summoner SummonerDto `json:"summoner"`
-	Matches  []MatchDto  `json:"matches"`
+	Account  lol.AccountDto  `json:"account"`
+	Summoner lol.SummonerDto `json:"summoner"`
+	Matches  []lol.MatchDto  `json:"matches"`
 }
 
 func (rc *RiotClient) GetSummonerMatchHistory(w http.ResponseWriter, r *http.Request) {
 	summonerName := r.URL.Query().Get("summonerName")
 	tagLine := r.URL.Query().Get("tag")
 
-	acc := GetAccountInfo(summonerName, tagLine, rc.apiKey)
-	summoner := GetSummonerInfo(acc.Puuid, rc.apiKey)
+	acc := lol.GetAccountInfo(summonerName, tagLine, rc.apiKey)
+	summoner := lol.GetSummonerInfo(acc.Puuid, rc.apiKey)
 
-	matches := GetMatchHistory(acc.Puuid, rc.apiKey)
+	matches := lol.GetMatchHistory(acc.Puuid, rc.apiKey)
 
-	var matchHistory []MatchDto
+	var matchHistory []lol.MatchDto
 	for i, _ := range matches {
-		matchData := GetMatchDataFromId(matches[i], rc.apiKey)
+		matchData := lol.GetMatchDataFromId(matches[i], rc.apiKey)
 		matchHistory = append(matchHistory, matchData)
 	}
 
 	result := PlayerInfo{
+		Account:  acc,
 		Summoner: summoner,
 		Matches:  matchHistory,
 	}
