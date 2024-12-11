@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+
+/*
+* This search will be for the other pages, not the home page
+*/
 const Search = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
