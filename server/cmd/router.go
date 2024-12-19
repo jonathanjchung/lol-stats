@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jonathanjchung/lol-stats/server/config"
+	"github.com/jonathanjchung/lol-stats/server/middleware"
 	lol "github.com/jonathanjchung/lol-stats/server/riotclient"
 )
 
@@ -19,7 +20,17 @@ func main() {
 		log.Fatalf("Error creating RiotClient: %v", err)
 	}
 
+	commonMiddleware := []middleware.Middleware{
+		middleware.LogMiddleware,
+		middleware.CORSMiddleware,
+	}
+
 	mux := http.NewServeMux()
-	mux.Handle("/summoners", riotClient)
+	mux.Handle("/summoners", middleware.Chain(
+		func(w http.ResponseWriter, r *http.Request) {
+			riotClient.ServeHTTP(w, r)
+		},
+		commonMiddleware...,
+	))
 	http.ListenAndServe(":8080", mux)
 }

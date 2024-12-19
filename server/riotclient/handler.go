@@ -2,7 +2,6 @@ package lol
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/jonathanjchung/lol-stats/server/lol"
@@ -24,18 +23,17 @@ func (rc *RiotClient) GetSummonerMatchHistory(w http.ResponseWriter, r *http.Req
 	matches := lol.GetMatchHistory(acc.Puuid, rc.apiKey)
 
 	var matchHistory []lol.MatchDto
-	for i, _ := range matches {
+	for i := range matches {
 		matchData := lol.GetMatchDataFromId(matches[i], rc.apiKey)
 		matchHistory = append(matchHistory, matchData)
 	}
 
 	result := PlayerInfo{
-		Account:  acc,
+		Account:  acc, // I don't think you used this yet
 		Summoner: summoner,
 		Matches:  matchHistory,
 	}
 
-	log.Println(result)
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
