@@ -17,14 +17,31 @@ func (rc *RiotClient) GetSummonerMatchHistory(w http.ResponseWriter, r *http.Req
 	summonerName := r.URL.Query().Get("summonerName")
 	tagLine := r.URL.Query().Get("tag")
 
-	acc := lol.GetAccountInfo(summonerName, tagLine, rc.apiKey)
-	summoner := lol.GetSummonerInfo(acc.Puuid, rc.apiKey)
+	acc, status, err := lol.GetAccountInfo(summonerName, tagLine, rc.apiKey)
+	if err != nil {
+		http.Error(w, err.Error(), status)
+		return
+	}
 
-	matches := lol.GetMatchHistory(acc.Puuid, rc.apiKey)
+	summoner, status, err := lol.GetSummonerInfo(acc.Puuid, rc.apiKey)
+	if err != nil {
+		http.Error(w, err.Error(), status)
+		return
+	}
+
+	matches, status, err := lol.GetMatchHistory(acc.Puuid, rc.apiKey)
+	if err != nil {
+		http.Error(w, err.Error(), status)
+		return
+	}
 
 	var matchHistory []lol.MatchDto
 	for i := range matches {
-		matchData := lol.GetMatchDataFromId(matches[i], rc.apiKey)
+		matchData, status, err := lol.GetMatchDataFromId(matches[i], rc.apiKey)
+		if err != nil {
+			http.Error(w, err.Error(), status)
+			return
+		}
 		matchHistory = append(matchHistory, matchData)
 	}
 
