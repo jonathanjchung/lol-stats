@@ -1,4 +1,4 @@
-package lol
+package database
 
 type AccountDto struct {
 	Puuid    string `json:"puuid"`

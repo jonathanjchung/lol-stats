@@ -1,0 +1,133 @@
+notes
+
+at the minimum:
+region selection
+input summoner name with tagline
+	last updated, prob database stuff with on call call the api and update
+	match stats
+	rank
+	top champs
+	display name and tag and summoner icon
+
+ranked solo leaderboard
+	with region selection
+	top x
+
+
+
+tbd:
+champions, game modes, spectate, stats, multi search
+
+
+/****************************************************************************/
+
+
+
+player enters SUMMONER ID (OPTIONAL), GAME NAME, AND TAG
+	> get puuid which returns a thing
+	>	> maybe get idtag from puuid
+	> get match history using puuid
+	
+
+player clicks leaderboard section
+	> get ladder 
+	
+
+probably a get leaderboard (from db)
+and get leaderboard which updates the db calling api
+
+
+at some point endpoints need to be consts
+
+
+/****************************************************************************/
+
+testgettingaccountinfo is get riot account by id
+
+through this we can probably start calling other things because it gets us
+	the puuid, gamename, and tagline
+	
+getting ladder is separate from this account info so we dont need it yet
+
+so instead we can get match history by puuid
+	and get match from id (matchid) gets individual matches
+	and we probably have to 'process' it somehow, dont know what that entails
+	
+	
+/****************************************************************************/
+
+servehttp and related need to be separated from the actually api stuff
+
+
+/****************************************************************************/
+
+matches v5 / puuid for list of match history
+matches v5 / matchid for individual match info
+
+league v4 / league for ladder
+
+https://developer.riotgames.com/docs/lol#summoner-names-to-riot-ids_obtaining-puuid-and-summonerid-from-riotid
+
+curl "http://localhost:8080/summoners?summonerName=Porourf&tag=NA1"
+
+/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}
+
+/****************************************************************************/
+
+log.Printlns probably need to be fatal at some point
+	or need to rework error handling
+
+maybe implement logging system at some point
+	implement some kind of middleware
+	
+would need to rework functions, apiKey needs to be moved up a level
+
+
+/****************************************************************************/
+
+TODO:
+	proper logging and error handling
+	region handling, would prob start with links
+	
+
+/****************************************************************************/
+
+TECHNICALLY the homepage is ready to ship
+
+summoner page needs name/tag, and their 20 most recent matches
+	matches need who you played and who the other guys played and build
+	also needs gamemode and duration and outcome
+	NEED RANK
+	
+
+/****************************************************************************/
+
+you should do unit testing, try to learn
+	proper error handling should also be implemented then
+	
+the handler should have higher level error handling
+	match.go and account.go need better error handling to start testing
+	api key not refreshed error maybe
+	
+implement middleware before making any more changes
+
+/****************************************************************************/
+
+home page isnt done yet, need region support but not yet
+now work on summoner page, displaying important information
+
+/lol/league/v4/entries/by-summoner/{encryptedSummonerId} more profile info
+
+champ icons, summoner icons, rune icons, item icons
+queueid is the gamemode
+
+/****************************************************************************/
+
+need a setup.sql probably but i dont know how to use it
+you need to set up the tables and columns
+then figure out how to store the thingys then query them when you want to lookup
+
+/****************************************************************************/
+
+fix the match rendering
+need update button

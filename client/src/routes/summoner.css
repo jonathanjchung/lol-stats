@@ -1,0 +1,24 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header-wrapper {
+    width: 1080px;
+    height: 288px;
+    display: flex;
+}
+
+.content-container {
+    margin-left: 10px;
+}
+
+.participants {
+    display: flex;
+}
+
+.blue-side, .red-side {
+    display: flex;
+    flex-direction: column;
+}

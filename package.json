@@ -1,0 +1,14 @@
+{
+  "name": "opgg",
+  "version": "1.0.0",
+  "scripts": {
+    "install-all": "concurrently \"npm install\" \"npm install --prefix client\"",
+    "setup": "npm --prefix server run setup",
+    "client": "npm --prefix client run dev",
+    "server": "cd server/cmd && go run main.go",
+    "dev": "concurrently \"npm run client\" \"npm run server\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

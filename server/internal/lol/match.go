@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/jonathanjchung/lol-stats/server/config"
+	"github.com/jonathanjchung/lol-stats/server/internal/database"
 )
 
 func GetMatchHistory(puuid string, apiKey string) ([]string, int, error) {
@@ -33,26 +34,26 @@ func GetMatchHistory(puuid string, apiKey string) ([]string, int, error) {
 	return matchList, http.StatusOK, nil
 }
 
-func GetMatchDataFromId(matchId string, apiKey string) (MatchDto, int, error) {
+func GetMatchDataFromId(matchId string, apiKey string) (database.MatchDto, int, error) {
 	url := fmt.Sprintf(config.MatchDataEndpoint, matchId, apiKey)
 
 	if matchId == "" {
-		return MatchDto{}, http.StatusBadRequest, fmt.Errorf("missing matchId")
+		return database.MatchDto{}, http.StatusBadRequest, fmt.Errorf("missing matchId")
 	}
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return MatchDto{}, http.StatusInternalServerError, fmt.Errorf("failed to make HTTP request: %v", err)
+		return database.MatchDto{}, http.StatusInternalServerError, fmt.Errorf("failed to make HTTP request: %v", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return MatchDto{}, resp.StatusCode, fmt.Errorf("received non-OK status code: %d", resp.StatusCode)
+		return database.MatchDto{}, resp.StatusCode, fmt.Errorf("received non-OK status code: %d", resp.StatusCode)
 	}
 
-	var matchData MatchDto
+	var matchData database.MatchDto
 	if err := json.NewDecoder(resp.Body).Decode(&matchData); err != nil {
-		return MatchDto{}, http.StatusInternalServerError, fmt.Errorf("failed to decode response: %v", err)
+		return database.MatchDto{}, http.StatusInternalServerError, fmt.Errorf("failed to decode response: %v", err)
 	}
 
 	return matchData, http.StatusOK, nil

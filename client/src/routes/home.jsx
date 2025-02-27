@@ -38,16 +38,14 @@ export default function Home() {
         );
     };
     return (
-        <>
-        <body>
+        <div>
             <Navbar />
             <div className="entire-page">
                 <div className="logo-container">
-                    <img src={opggLogo} height="224" alt="OP.GG Logo" />
+                    <img src={opggLogo} height="224" alt="OP.GG" />
                 </div>
                 <SearchBar />
             </div>
-        </body>
-        </>
+        </div>
     )
 }
