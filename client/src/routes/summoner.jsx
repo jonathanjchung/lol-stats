@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import MatchData from "../components/matchdata";
-import profileIcon from "../icons/opgg.jpg";
+import profileIcon555 from "../icons/profileicon555.png";
 import './summoner.css'
 
 export default function Summoner() {
@@ -20,9 +20,11 @@ export default function Summoner() {
         }
         else {
             return (
-                <div>
+                <div className="match-history">
                     {matchHistory.map((m) => (
-                        <MatchData key={m.info.gameId} match={m} summName={accountInfo.gameName} />
+                        <div className="match-wrapper">
+                            <MatchData key={m.info.gameId} match={m} summName={accountInfo.gameName} />
+                        </div>
                     ))}
                 </div>
             )
@@ -62,18 +64,31 @@ export default function Summoner() {
             {!loading && !error && (
                 <>
                     <div className="content-header">
-                        <div className="header-wrapper">
-                            <div className="profile-icon">
-                                <img src={profileIcon} alt="Profile icon"/>
-                                <div>{summonerInfo.summonerLevel}</div>
+                        <div className="wrapper">
+                            <div className="profile-info">
+                                <div className="summoner-icon">
+                                    <img src={profileIcon555} alt="Summoner icon"/>
+                                    <div className="level">
+                                        <span className="level">
+                                            {summonerInfo.summonerLevel}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="player-info">
+                                    <h1>
+                                        <span className="summoner-name">{accountInfo.gameName} #{accountInfo.tagLine}</span>
+                                    </h1>
+                                    <div className="update">
+                                        <button className="update-button">Update</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="player-info">
-                                <div>{accountInfo.gameName} #{accountInfo.tagLine}</div>
-                            </div>
+                        </div>
+                        <div className="some-divider">
+                            <div style={{marginLeft: "20px"}}>Recent Games</div>
                         </div>
                     </div>
                     <div className="content-container">
-                        <h2>Recent games</h2>
                         {renderMatches()}
                     </div>
                 </>

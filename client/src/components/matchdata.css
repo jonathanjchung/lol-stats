@@ -1,0 +1,96 @@
+.contents {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    justify-content: space-between;
+    height: auto;
+    width: 800px;
+    padding: 10px;
+}
+
+.game-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.top-row {
+    display: flex;
+    gap: .75rem;
+}
+
+.champ-and-loadout {
+    display: flex;
+    gap: .25rem;
+}
+
+.champ {
+    width: 48px;
+    height: 48px;
+    border: 1px solid black;
+    border-radius: 9999px;
+    text-align: center;
+}
+
+.loadout {
+    display: flex;
+    gap: .125rem;
+}
+
+.sums {
+    display: flex;
+    flex-direction: column;
+    gap: .125rem;
+}
+
+.runes {
+    display: flex;
+    flex-direction: column;
+    gap: .125rem;
+}
+
+.kda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .125rem;
+}
+
+.scoreline {
+    display: flex;
+    gap: .25rem;
+}
+
+.image-icon {
+    width: 22px;
+    height: 22px;
+    border: 1px solid black;
+}
+
+.item-and-sum {
+    border-radius: .25rem;
+    text-align: center;
+}
+
+.rune-icon {
+    border-radius: 9999px;
+    text-align: center;
+}
+
+.item-list {
+    display: flex;
+    gap: .125rem;
+}
+
+.participants {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+.blue-side, .red-side {
+    display: flex;
+    flex-direction: column;
+}
+
